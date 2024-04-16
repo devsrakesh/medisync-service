@@ -1,8 +1,18 @@
-// billing.entity.ts
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-export type BillingDocument = Billing & Document;
+// Define types for nested objects
+export type BillingDocument = Billing &Document
+class InsuranceInfo {
+  @Prop({ required: true })
+  companyName: string;
+
+  @Prop({ required: true })
+  policyNumber: string;
+
+  @Prop({ required: true })
+  coverageDetails: string;
+}
 
 @Schema()
 export class Billing {
@@ -12,12 +22,8 @@ export class Billing {
   @Prop({ required: true })
   patientId: string;
 
-  @Prop({ required: true })
-  insuranceInfo: {
-    companyName: string;
-    policyNumber: string;
-    coverageDetails: string;
-  };
+  @Prop({ required: true, type: InsuranceInfo }) // Specify the type for nested object
+  insuranceInfo: InsuranceInfo;
 
   @Prop({ required: true })
   dateOfService: Date;
@@ -37,7 +43,7 @@ export class Billing {
   @Prop({ required: true })
   paymentMethod: string;
 
-  @Prop({ required: true })
+  @Prop({ required: true, type: [{ paymentDate: Date, paymentAmount: Number, paymentMethod: String, transactionId: String, paymentStatus: String }] }) // Specify the type as an array of objects
   paymentTransactions: {
     paymentDate: Date;
     paymentAmount: number;
@@ -55,7 +61,7 @@ export class Billing {
   @Prop({ required: true })
   dueDate: Date;
 
-  @Prop({ required: true })
+  @Prop({ required: true, type: [{ description: String, amount: Number }] }) // Specify the type as an array of objects
   itemizedCharges: {
     description: string;
     amount: number;
@@ -70,19 +76,19 @@ export class Billing {
   @Prop({ required: true })
   statementPeriod: string;
 
-  @Prop({ required: true })
+  @Prop({ required: true, type: [{ period: String, revenueGenerated: Number }] }) // Specify the type as an array of objects
   revenueReports: {
     period: string;
     revenueGenerated: number;
   }[];
 
-  @Prop({ required: true })
+  @Prop({ required: true, type: [{ period: String, outstandingPayments: Number }] }) // Specify the type as an array of objects
   accountsReceivableReports: {
     period: string;
     outstandingPayments: number;
   }[];
 
-  @Prop({ required: true })
+  @Prop({ required: true, type: [{ paymentDate: Date, amountReceived: Number, payer: String }] }) // Specify the type as an array of objects
   paymentHistory: {
     paymentDate: Date;
     amountReceived: number;

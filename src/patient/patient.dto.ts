@@ -1,6 +1,7 @@
 // create-patient.dto.ts
 import { IsNotEmpty, IsString, IsDate, IsArray, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
+import { PartialType } from '@nestjs/mapped-types';
 
 class EmergencyContactDto {
   @IsNotEmpty()

@@ -3,10 +3,11 @@ import { Controller, Get, Post, Body, Put, Param, Delete } from '@nestjs/common'
 
 import { CreatePatientDto, UpdatePatientDto } from './patient.dto';
 import { Patient } from './patient.entity';
+import { PatientService } from './patient.service';
 
 @Controller('patients')
 export class PatientController {
-  constructor(private readonly patientService: PatientS) {}
+  constructor(private readonly patientService: PatientService) {}
 
   @Get()
   async findAll(): Promise<Patient[]> {

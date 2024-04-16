@@ -7,7 +7,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { User } from '../../user/user.entity';
 
 @Injectable()
-export class jwtStratagy extends PassportStrategy(Strategy, 'jwt') {
+export class jwtStrategy extends PassportStrategy(Strategy, 'jwt') {
   constructor(
     config: ConfigService,
     @InjectModel(User.name) private userModel: Model<User>,

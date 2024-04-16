@@ -58,7 +58,7 @@ export class Finance {
   reportPeriod: string;
 
   @Prop({ required: true })
-  reportData: any; // Assuming report data can vary based on report type
+  reportData: string; // Assuming report data can vary based on report type
 
   // Integration with Accounting Systems
   @Prop({ required: true })

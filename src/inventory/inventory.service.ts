@@ -27,6 +27,6 @@ export class InventoryService {
   }
 
   async remove(id: string): Promise<Inventory> {
-    return this.inventoryModel.findByIdAndRemove(id).exec();
+    return this.inventoryModel.findByIdAndDelete(id).exec();
   }
 }

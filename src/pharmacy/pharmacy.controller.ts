@@ -1,7 +1,7 @@
 // pharmacy.controller.ts
 import { Controller, Get, Post, Body, Put, Param, Delete } from '@nestjs/common';
 import { PharmacyService } from './pharmacy.service';
-import { CreatePharmacyDto, UpdatePharmacyDto } from './dto';
+import { CreatePharmacyDto, UpdatePharmacyDto } from './pharmacy.dto';
 import { Pharmacy } from './pharmacy.entity';
 
 @Controller('pharmacy')

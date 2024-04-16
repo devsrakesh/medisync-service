@@ -15,6 +15,10 @@ export class User {
   @Prop({ required: true })
   password: string;
 
+  @Prop({ required: true })
+  contactNumber: string;
+
+
   // You can add more fields as needed
 }
 

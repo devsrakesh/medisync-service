@@ -6,8 +6,8 @@ import * as argon from 'argon2';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { InjectModel } from '@nestjs/mongoose';
-import { User } from 'src/users/schemas/user.schema';
 import { Model, ObjectId } from 'mongoose';
+import { User } from 'src/user/user.entity';
 
 @Injectable()
 export class AuthService {

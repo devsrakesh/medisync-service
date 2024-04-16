@@ -27,6 +27,6 @@ export class BillingService {
   }
 
   async remove(id: string): Promise<Billing> {
-    return this.billingModel.findByIdAndRemove(id).exec();
+    return this.billingModel.findByIdAndDelete(id).exec();
   }
 }

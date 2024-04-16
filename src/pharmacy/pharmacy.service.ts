@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Pharmacy, PharmacyDocument } from './pharmacy.entity';
-import { CreatePharmacyDto, UpdatePharmacyDto } from './dto';
+import { CreatePharmacyDto, UpdatePharmacyDto } from './pharmacy.dto';
 
 @Injectable()
 export class PharmacyService {
