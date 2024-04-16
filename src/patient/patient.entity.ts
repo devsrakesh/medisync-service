@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 // Define types for nested objects
-export type PatientDocument = Patient & Document
+export type PatientDocument = Patient & Document;
 class EmergencyContact {
   @Prop({ required: true })
   name: string;

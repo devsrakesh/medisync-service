@@ -11,7 +11,7 @@ async function bootstrap() {
     }),
   );
 
-  app.enableCors({origin:"*"});
+  app.enableCors({ origin: '*' });
 
   const config = new DocumentBuilder()
     .setTitle('HMS Api')

@@ -55,7 +55,7 @@ export class Pharmacy {
   prescriptionDate: Date;
 
   @Prop()
-  medicationsPrescribed: { medicationId: string, dosage: string, quantity: number }[];
+  medicationsPrescribed: { medicationId: string; dosage: string; quantity: number }[];
 
   @Prop({ required: true })
   dispensingStatus: string;

@@ -2,7 +2,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-export type HospitalDocument = Hospital & Document
+export type HospitalDocument = Hospital & Document;
 
 @Schema()
 export class Hospital extends Document {

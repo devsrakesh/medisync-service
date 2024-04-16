@@ -129,6 +129,4 @@ export class CreatePharmacyDto {
   dataMapping: string;
 }
 
-
-
 export class UpdatePharmacyDto extends PartialType(CreatePharmacyDto) {}

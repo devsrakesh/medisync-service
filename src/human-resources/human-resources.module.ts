@@ -5,9 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { HumanResources, HumanResourcesSchema } from './human-resources.entity';
 
 @Module({
-  imports:[    
-    MongooseModule.forFeature([{ name: HumanResources.name, schema: HumanResourcesSchema }]),
-  ],
+  imports: [MongooseModule.forFeature([{ name: HumanResources.name, schema: HumanResourcesSchema }])],
   controllers: [HumanResourcesController],
   providers: [HumanResourcesService],
 })

@@ -229,5 +229,4 @@ export class CreateHumanResourcesDto {
 
 // update-human-resources.dto.ts
 
-
 export class UpdateHumanResourcesDto extends PartialType(CreateHumanResourcesDto) {}

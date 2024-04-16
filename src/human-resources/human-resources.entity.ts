@@ -23,7 +23,6 @@ class performanceReviews {
   comments: string;
 }
 class payrollTaxInformation {
-
   @Prop({ required: true })
   taxDeductions: number;
 
@@ -32,9 +31,9 @@ class payrollTaxInformation {
 
   @Prop({ required: true })
   filingStatus: string;
-};
+}
 
-class salaryInformation{
+class salaryInformation {
   @Prop({ required: true })
   baseSalary: number;
 
@@ -43,7 +42,7 @@ class salaryInformation{
 
   @Prop({ required: true })
   deductions: Deduction[];
-};
+}
 
 class leaveManagement {
   @Prop({ required: true })
@@ -87,7 +86,6 @@ class Deduction {
 }
 
 class shiftSchedule {
-  
   @Prop({ required: true })
   shift: string;
 
@@ -158,13 +156,13 @@ export class HumanResources {
   leaveManagement: leaveManagement[];
 
   // Payroll
-  @Prop({ required: true ,type:salaryInformation})
+  @Prop({ required: true, type: salaryInformation })
   salaryInformation: salaryInformation;
 
   @Prop({ required: true })
   payrollPeriod: string;
 
-  @Prop({ required: true,type:payrollTaxInformation })
+  @Prop({ required: true, type: payrollTaxInformation })
   payrollTaxInformation: payrollTaxInformation;
 
   @Prop({ required: true })

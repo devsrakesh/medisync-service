@@ -5,7 +5,6 @@ import { CreateRoleDto, UpdateRoleDto } from './role.dto';
 import { RolesService } from './role.service';
 import { Role } from './role.entity';
 
-
 @Controller('roles')
 export class RolesController {
   constructor(private readonly rolesService: RolesService) {}

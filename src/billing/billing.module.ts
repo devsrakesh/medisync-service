@@ -5,9 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Billing, BillingSchema } from './billing.entity';
 
 @Module({
-  imports:[    
-    MongooseModule.forFeature([{ name:Billing.name, schema: BillingSchema }]),
-  ],
+  imports: [MongooseModule.forFeature([{ name: Billing.name, schema: BillingSchema }])],
   controllers: [BillingController],
   providers: [BillingService],
 })

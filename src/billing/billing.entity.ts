@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
 // Define types for nested objects
-export type BillingDocument = Billing &Document
+export type BillingDocument = Billing & Document;
 class InsuranceInfo {
   @Prop({ required: true })
   companyName: string;
@@ -43,7 +43,10 @@ export class Billing {
   @Prop({ required: true })
   paymentMethod: string;
 
-  @Prop({ required: true, type: [{ paymentDate: Date, paymentAmount: Number, paymentMethod: String, transactionId: String, paymentStatus: String }] }) // Specify the type as an array of objects
+  @Prop({
+    required: true,
+    type: [{ paymentDate: Date, paymentAmount: Number, paymentMethod: String, transactionId: String, paymentStatus: String }],
+  }) // Specify the type as an array of objects
   paymentTransactions: {
     paymentDate: Date;
     paymentAmount: number;

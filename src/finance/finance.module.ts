@@ -5,9 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Finance, FinanceSchema } from './finance.entity';
 
 @Module({
-  imports:[    
-    MongooseModule.forFeature([{ name:Finance.name, schema: FinanceSchema }]),
-  ],
+  imports: [MongooseModule.forFeature([{ name: Finance.name, schema: FinanceSchema }])],
   controllers: [FinanceController],
   providers: [FinanceService],
 })

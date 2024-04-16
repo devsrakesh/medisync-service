@@ -5,9 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Inventory, InventorySchema } from './inventory.entity';
 
 @Module({
-  imports:[    
-    MongooseModule.forFeature([{ name: Inventory.name, schema: InventorySchema }]),
-  ],
+  imports: [MongooseModule.forFeature([{ name: Inventory.name, schema: InventorySchema }])],
   controllers: [InventoryController],
   providers: [InventoryService],
 })

@@ -99,6 +99,4 @@ export class CreateInventoryDto {
   lastModifiedAt?: Date;
 }
 
-
-
 export class UpdateInventoryDto extends PartialType(CreateInventoryDto) {}

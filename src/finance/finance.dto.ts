@@ -87,6 +87,4 @@ export class CreateFinanceDto {
   dataMapping: string;
 }
 
-
-
 export class UpdateFinanceDto extends PartialType(CreateFinanceDto) {}

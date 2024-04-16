@@ -39,6 +39,4 @@ export class CreateAppointmentDto {
 
 // update-appointment.dto.ts
 
-
-
 export class UpdateAppointmentDto extends PartialType(CreateAppointmentDto) {}

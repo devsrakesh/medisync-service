@@ -5,9 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Pharmacy, PharmacySchema } from './pharmacy.entity';
 
 @Module({
-  imports:[    
-    MongooseModule.forFeature([{ name: Pharmacy.name, schema: PharmacySchema }]),
-  ],
+  imports: [MongooseModule.forFeature([{ name: Pharmacy.name, schema: PharmacySchema }])],
   controllers: [PharmacyController],
   providers: [PharmacyService],
 })

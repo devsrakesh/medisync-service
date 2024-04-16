@@ -1,5 +1,3 @@
-
-
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { CreateAuthDto } from './dto';
 import * as argon from 'argon2';
@@ -63,10 +61,7 @@ export class AuthService {
       }
     }
   }
-  async signToken(
-    userId: ObjectId,
-    contactNumber: string,
-  ): Promise<{ access_token: string }> {
+  async signToken(userId: ObjectId, contactNumber: string): Promise<{ access_token: string }> {
     const payload = {
       sub: userId,
       contactNumber,

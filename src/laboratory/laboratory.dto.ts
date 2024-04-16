@@ -99,5 +99,4 @@ export class CreateLaboratoryDto {
   dataMapping: string;
 }
 
-
 export class UpdateLaboratoryDto extends PartialType(CreateLaboratoryDto) {}
