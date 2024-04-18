@@ -36,8 +36,6 @@ export class AuthService {
   }
   async signup(dto: CreateAuthDto) {
     const hash = await argon.hash(dto.password);
-    console.log(dto);
-    // post method creates new user and enter data to  user db
     try {
       const olduser = await this.userModel.findOne({
         contactNumber: dto.contactNumber,
@@ -61,7 +59,7 @@ export class AuthService {
       }
     }
   }
-  async signToken(userId: ObjectId, contactNumber: string): Promise<{ access_token: string }> {
+  async signToken(userId: ObjectId, contactNumber: string): Promise<{ data: string }> {
     const payload = {
       sub: userId,
       contactNumber,
@@ -71,7 +69,7 @@ export class AuthService {
       secret: this.config.get('JWT_SECRET'),
     });
     return {
-      access_token: token,
+      data: token,
     };
   }
 }

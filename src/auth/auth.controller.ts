@@ -12,10 +12,9 @@ export class AuthController {
   // auth/signup
   @Post('signup')
   // @Req() req: Request it dependent to express
-  signup(@Body() dto: CreateAuthDto) {
-    console.log(dto);
+ async signup(@Body() dto: CreateAuthDto) {
     // return 'i have signed up';
-    return this.authService.signup(dto);
+    return  await this.authService.signup(dto);
   }
 
   //auth/signin

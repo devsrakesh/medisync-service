@@ -9,8 +9,13 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
-  async findAll(): Promise<User[]> {
-    return this.userService.findAll();
+  async findAll(): Promise<any> {
+    const data =await this.userService.findAll();
+    console.log(data);
+    return {
+      message: "fix",
+      data
+    }
   }
 
   @Get(':id')

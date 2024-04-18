@@ -15,14 +15,15 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('HMS Api')
-    .setDescription('this is the api for mlm ')
+    .setDescription('this is the api for HSM ')
     .setVersion('1.0')
     .addTag('HMS')
+    .setExternalDoc('Postman Collection', '/docs-json')
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('/docs', app, document);
 
   app.useGlobalInterceptors(new ResponseInterceptor());
-  await app.listen(3001);
+  await app.listen(3002);
 }
 bootstrap();
