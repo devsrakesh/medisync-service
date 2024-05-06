@@ -1,45 +1,50 @@
-// hospital.dto.ts
-import { IsNotEmpty, IsString, IsEmail } from 'class-validator';
+import { IsNotEmpty, IsString, IsEmail, IsNumber, IsOptional } from 'class-validator';
+import { PartialType } from '@nestjs/mapped-types';
 
 export class CreateHospitalDto {
-  @IsNotEmpty()
   @IsString()
+  @IsNotEmpty()
   name: string;
 
-  @IsNotEmpty()
   @IsString()
-  hospitalId: string;
+  @IsNotEmpty()
+  registrationId: string; // Unique identifier for the hospital
 
-  @IsNotEmpty()
   @IsString()
+  @IsNotEmpty()
   address: string;
 
+  @IsString()
   @IsNotEmpty()
-  @IsString()
-  phone: string;
+  city: string;
 
+  @IsString()
   @IsNotEmpty()
-  @IsEmail()
-  email: string;
-
-  logo?: string;
-}
-
-export class UpdateHospitalDto {
-  @IsString()
-  name?: string;
+  state: string;
 
   @IsString()
-  hospitalId?: string;
+  @IsNotEmpty()
+  country: string;
+
+  @IsNumber()
+  @IsNotEmpty()
+  pinCode: number; // ZIP/Postal code
 
   @IsString()
-  address?: string;
-
-  @IsString()
-  phone?: string;
+  @IsNotEmpty()
+  phone: string; // Contact phone number
 
   @IsEmail()
-  email?: string;
+  @IsNotEmpty()
+  email: string; // Contact email
 
-  logo?: string;
+  @IsString()
+  @IsNotEmpty()
+  ContactNumber: string; // Alternative contact number
+
+  @IsOptional()
+  @IsString()
+  logo?: string; // Optional logo
 }
+
+export class UpdateHospitalDto extends PartialType(CreateHospitalDto) {}

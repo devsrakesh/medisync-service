@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
 // Define types for nested objects
 export type PatientDocument = Patient & Document;
 class EmergencyContact {
@@ -27,7 +27,10 @@ class InsuranceInformation {
 @Schema()
 export class Patient {
   @Prop({ required: true })
-  fullName: string;
+  firstName: string;
+
+  @Prop({ required: true })
+  lastName: string;
 
   @Prop({ required: true })
   dateOfBirth: Date;
@@ -38,13 +41,16 @@ export class Patient {
   @Prop({ required: true })
   address: string;
 
-  @Prop({ required: true })
-  contactInformation: string[];
+  @Prop({ unique: true, required: true })
+  contactNumber: string;
 
-  @Prop({ required: true, type: EmergencyContact }) // Specify the type for nested object
+  @Prop({ unique: true, required: true })
+  uniqueCode: string;
+
+  @Prop({ type: EmergencyContact }) // Specify the type for nested object
   emergencyContact: EmergencyContact;
 
-  @Prop({ required: true, type: InsuranceInformation }) // Specify the type for nested object
+  @Prop({ type: InsuranceInformation }) // Specify the type for nested object
   insuranceInformation: InsuranceInformation;
 
   @Prop()
@@ -62,7 +68,7 @@ export class Patient {
   @Prop()
   familyMedicalHistory: string[];
 
-  @Prop({ required: true })
+  @Prop({})
   chiefComplaint: string;
 
   @Prop({ type: Object }) // Specify the type as Object
@@ -72,7 +78,8 @@ export class Patient {
     respiratoryRate: string;
     temperature: string;
     oxygenSaturation: string;
-  };
+    date: Date;
+  }[];
 
   @Prop({ type: [{ date: Date, time: String, location: String }] }) // Specify the type as an array of objects
   appointmentSchedule: {
@@ -87,6 +94,18 @@ export class Patient {
     reason: string;
     outcome: string;
   }[];
+
+  @Prop({})
+  createdBy: Types.ObjectId;
+
+  @Prop({})
+  updatedBy: Types.ObjectId;
+
+  @Prop({ type: Date, default: Date.now })
+  createdAt: Date;
+
+  @Prop({ type: Date, default: Date.now })
+  updatedAt: Date;
 }
 
 export const PatientSchema = SchemaFactory.createForClass(Patient);

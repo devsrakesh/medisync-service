@@ -1,19 +1,26 @@
-import { Injectable, NestInterceptor, ExecutionContext, CallHandler } from '@nestjs/common';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Injectable, NestInterceptor, ExecutionContext, CallHandler, HttpStatus, HttpException } from '@nestjs/common';
+import { Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { Response } from 'src/interceptor/response.interface';
 
 @Injectable()
-export class ResponseInterceptor implements NestInterceptor {
-  intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
-    const httpContext = context.switchToHttp();
-    const response = httpContext.getResponse();
+export class ResponseInterceptor<T> implements NestInterceptor<T, Response<T>> {
+  intercept(context: ExecutionContext, next: CallHandler): Observable<Response<T>> {
     return next.handle().pipe(
-      map((data) => {
-        return {
-          status: response.statusCode,
-          message: data.message,
-          data: data.data,
-        };
+      map((data) => ({
+        status: context.switchToHttp().getResponse().statusCode,
+        message: 'Success',
+        data,
+      })),
+      catchError((error) => {
+        const status = error instanceof HttpException ? error.getStatus() : HttpStatus.INTERNAL_SERVER_ERROR;
+        return throwError(() => error).pipe(
+          map((err: any) => ({
+            status,
+            message: err.message || 'Internal server error',
+            data: null,
+          })),
+        );
       }),
     );
   }

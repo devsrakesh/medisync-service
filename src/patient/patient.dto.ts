@@ -1,82 +1,65 @@
 // create-patient.dto.ts
-import { IsNotEmpty, IsString, IsDate, IsArray, ValidateNested } from 'class-validator';
+import { IsNotEmpty, IsString, IsDate, IsArray, ValidateNested, IsOptional } from 'class-validator';
 import { Type } from 'class-transformer';
 import { PartialType } from '@nestjs/mapped-types';
 
 class EmergencyContactDto {
-  @IsNotEmpty()
   @IsString()
   name: string;
 
-  @IsNotEmpty()
   @IsString()
   relationship: string;
 
-  @IsNotEmpty()
   @IsString()
   contact: string;
 }
 
 class InsuranceInformationDto {
-  @IsNotEmpty()
   @IsString()
   policyNumber: string;
 
-  @IsNotEmpty()
   @IsString()
   company: string;
 
-  @IsNotEmpty()
   @IsString()
   coverageDetails: string;
 }
 
 class VitalSignsDto {
-  @IsNotEmpty()
   @IsString()
   bloodPressure: string;
 
-  @IsNotEmpty()
   @IsString()
   heartRate: string;
 
-  @IsNotEmpty()
   @IsString()
   respiratoryRate: string;
 
-  @IsNotEmpty()
   @IsString()
   temperature: string;
 
-  @IsNotEmpty()
   @IsString()
   oxygenSaturation: string;
 }
 
 class AppointmentScheduleDto {
-  @IsNotEmpty()
   @IsDate()
   date: Date;
 
-  @IsNotEmpty()
   @IsString()
   time: string;
 
-  @IsNotEmpty()
   @IsString()
   location: string;
 }
 
 class VisitHistoryDto {
-  @IsNotEmpty()
   @IsDate()
   date: Date;
 
-  @IsNotEmpty()
   @IsString()
   reason: string;
 
-  @IsNotEmpty()
   @IsString()
   outcome: string;
 }
@@ -84,10 +67,12 @@ class VisitHistoryDto {
 export class CreatePatientDto {
   @IsNotEmpty()
   @IsString()
-  fullName: string;
+  firstName: string;
+
+  @IsString()
+  lastName: string;
 
   @IsNotEmpty()
-  @IsDate()
   dateOfBirth: Date;
 
   @IsNotEmpty()
@@ -99,42 +84,43 @@ export class CreatePatientDto {
   address: string;
 
   @IsNotEmpty()
-  @IsArray()
-  contactInformation: string[];
-
-  @IsNotEmpty()
-  @ValidateNested()
-  emergencyContact: EmergencyContactDto;
-
-  @IsNotEmpty()
-  @ValidateNested()
-  insuranceInformation: InsuranceInformationDto;
-
-  preExistingConditions?: string[];
-
-  allergies?: string[];
-
-  medications?: string[];
-
-  surgicalHistory?: string[];
-
-  familyMedicalHistory?: string[];
+  @IsString()
+  contactNumber: string;
 
   @IsNotEmpty()
   @IsString()
-  chiefComplaint: string;
+  uniqueCode: string;
 
-  @IsNotEmpty()
+  @ValidateNested()
+  emergencyContact: EmergencyContactDto;
+
+  @ValidateNested()
+  insuranceInformation: InsuranceInformationDto;
+
+  preExistingConditions: string[];
+
+  allergies: string[];
+
+  medications: string[];
+
+  surgicalHistory: string[];
+
+  familyMedicalHistory: string[];
+
+  @IsString()
+  @IsOptional()
+  chiefComplaint?: string;
+
   @ValidateNested()
   vitalSigns: VitalSignsDto;
 
   @IsArray()
-  @ValidateNested({ each: true })
+  @IsOptional()
   @Type(() => AppointmentScheduleDto)
-  appointmentSchedule?: AppointmentScheduleDto[];
+  appointmentSchedule: AppointmentScheduleDto[];
 
   @IsArray()
-  @ValidateNested({ each: true })
+  @IsOptional()
   @Type(() => VisitHistoryDto)
   visitHistory?: VisitHistoryDto[];
 }

@@ -1,24 +1,62 @@
 // user.entity.ts
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
 
 export type UserDocument = User & Document;
-
-@Schema()
+@Schema({
+  timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' },
+})
 export class User {
-  @Prop({  })
-  userName: string;
+  @Prop({ required: true })
+  userId: string;
 
-  @Prop({  })
-  email: string;
-
-  @Prop({  })
+  @Prop({ required: true })
   password: string;
 
-  @Prop({  })
+  @Prop({})
+  email: string;
+
+  @Prop({})
+  name: string;
+
+  @Prop({})
   contactNumber: string;
 
-  // You can add more fields as needed
+  @Prop({})
+  Address: string;
+
+  @Prop({})
+  city: string;
+
+  @Prop({})
+  state: string;
+
+  @Prop({})
+  country: string;
+
+  @Prop({})
+  pinCode: string;
+
+  @Prop({ type: Types.ObjectId })
+  hospital: Types.ObjectId;
+
+  @Prop({ type: Types.ObjectId })
+  role: Types.ObjectId;
+
+  @Prop({ type: Types.ObjectId })
+  Designation: Types.ObjectId;
+
+  @Prop()
+  createdAt: Date;
+  @Prop()
+  updatedAt: Date;
+
+  @Prop({})
+  createdBy: Types.ObjectId;
+
+  @Prop({})
+  updatedBy: Types.ObjectId;
 }
+
 
 export const UserSchema = SchemaFactory.createForClass(User);
