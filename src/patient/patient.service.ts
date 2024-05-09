@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Patient, PatientDocument } from './patient.entity';
 import { CreatePatientDto, UpdatePatientDto } from './patient.dto';
-import { Response } from 'src/interceptor/response.interface';
+import { Response } from 'src/common/interceptor/response.interface';
 // Response interface for consistent structure
 
 @Injectable()

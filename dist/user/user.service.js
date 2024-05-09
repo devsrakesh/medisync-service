@@ -16,7 +16,7 @@ exports.UserService = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
-const user_entity_1 = require("./user.entity");
+const user_entity_1 = require("./entity/user.entity");
 let UserService = class UserService {
     constructor(userModel) {
         this.userModel = userModel;

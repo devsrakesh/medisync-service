@@ -25,7 +25,7 @@
 import { Model } from 'mongoose';
 import { Hospital, HospitalDocument } from './hospital.entity';
 import { CreateHospitalDto, UpdateHospitalDto } from './hospital.dto';
-import { Response } from 'src/interceptor/response.interface';
+import { Response } from 'src/common/interceptor/response.interface';
 export declare class HospitalService {
     private hospitalModel;
     constructor(hospitalModel: Model<HospitalDocument>);

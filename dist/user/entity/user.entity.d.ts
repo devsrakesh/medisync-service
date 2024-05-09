@@ -23,6 +23,7 @@
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
 import { Document, Types } from 'mongoose';
+import { IPermission } from 'src/permissions/entities/permission.entity';
 export type UserDocument = User & Document;
 export declare class User {
     userId: string;
@@ -38,6 +39,7 @@ export declare class User {
     hospital: Types.ObjectId;
     role: Types.ObjectId;
     Designation: Types.ObjectId;
+    permissions: IPermission[];
     createdAt: Date;
     updatedAt: Date;
     createdBy: Types.ObjectId;

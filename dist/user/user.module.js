@@ -10,7 +10,7 @@ exports.UserModule = void 0;
 const common_1 = require("@nestjs/common");
 const user_service_1 = require("./user.service");
 const mongoose_1 = require("@nestjs/mongoose");
-const user_entity_1 = require("./user.entity");
+const user_entity_1 = require("./entity/user.entity");
 const user_controller_1 = require("./user.controller");
 let UserModule = class UserModule {
 };
@@ -20,6 +20,7 @@ exports.UserModule = UserModule = __decorate([
         imports: [mongoose_1.MongooseModule.forFeature([{ name: user_entity_1.User.name, schema: user_entity_1.UserSchema }])],
         controllers: [user_controller_1.UserController],
         providers: [user_service_1.UserService],
+        exports: [user_service_1.UserService],
     })
 ], UserModule);
 //# sourceMappingURL=user.module.js.map

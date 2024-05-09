@@ -1,6 +1,7 @@
 // user.entity.ts
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
+import { IPermission } from 'src/permissions/entities/permission.entity';
 
 export type UserDocument = User & Document;
 @Schema({
@@ -46,6 +47,8 @@ export class User {
   @Prop({ type: Types.ObjectId })
   Designation: Types.ObjectId;
 
+  permissions: IPermission[];
+
   @Prop()
   createdAt: Date;
   @Prop()
@@ -58,5 +61,10 @@ export class User {
   updatedBy: Types.ObjectId;
 }
 
-
 export const UserSchema = SchemaFactory.createForClass(User);
+
+UserSchema.virtual('permissions', {
+  ref: 'Permission',
+  localField: '_id',
+  foreignField: 'user',
+});

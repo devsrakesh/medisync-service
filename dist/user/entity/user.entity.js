@@ -89,4 +89,9 @@ exports.User = User = __decorate([
     })
 ], User);
 exports.UserSchema = mongoose_1.SchemaFactory.createForClass(User);
+exports.UserSchema.virtual('permissions', {
+    ref: 'Permission',
+    localField: '_id',
+    foreignField: 'user',
+});
 //# sourceMappingURL=user.entity.js.map

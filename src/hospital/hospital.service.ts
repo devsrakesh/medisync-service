@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Hospital, HospitalDocument } from './hospital.entity';
 import { CreateHospitalDto, UpdateHospitalDto } from './hospital.dto';
-import { Response } from 'src/interceptor/response.interface';
+import { Response } from 'src/common/interceptor/response.interface';
 
 @Injectable()
 export class HospitalService {

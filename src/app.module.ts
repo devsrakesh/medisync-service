@@ -13,6 +13,8 @@ import { RoleModule } from './role/role.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
+import { PermissionsModule } from './permissions/permissions.module';
+import { PermissionsGuard } from './common/guards/permission.guard';
 
 @Module({
   imports: [
@@ -37,8 +39,9 @@ import { AuthModule } from './auth/auth.module';
     HospitalModule,
     RoleModule,
     AuthModule,
+    PermissionsModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [PermissionsGuard],
 })
 export class AppModule {}

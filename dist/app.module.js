@@ -22,6 +22,8 @@ const role_module_1 = require("./role/role.module");
 const mongoose_1 = require("@nestjs/mongoose");
 const config_1 = require("@nestjs/config");
 const auth_module_1 = require("./auth/auth.module");
+const permissions_module_1 = require("./permissions/permissions.module");
+const permission_guard_1 = require("./common/guards/permission.guard");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -49,9 +51,10 @@ exports.AppModule = AppModule = __decorate([
             hospital_module_1.HospitalModule,
             role_module_1.RoleModule,
             auth_module_1.AuthModule,
+            permissions_module_1.PermissionsModule,
         ],
         controllers: [],
-        providers: [],
+        providers: [permission_guard_1.PermissionsGuard],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

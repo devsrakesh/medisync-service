@@ -13,7 +13,7 @@ import {
   InternalServerErrorException,
 } from '@nestjs/common';
 import { PatientService } from './patient.service';
-import { Response } from 'src/interceptor/response.interface';
+import { Response } from 'src/common/interceptor/response.interface';
 import { Patient } from './patient.entity';
 import { CreatePatientDto, UpdatePatientDto } from './patient.dto';
 

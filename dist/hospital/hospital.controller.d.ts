@@ -1,7 +1,7 @@
 import { HospitalService } from './hospital.service';
 import { CreateHospitalDto, UpdateHospitalDto } from './hospital.dto';
 import { Hospital } from './hospital.entity';
-import { Response } from 'src/interceptor/response.interface';
+import { Response } from 'src/common/interceptor/response.interface';
 export declare class HospitalController {
     private readonly hospitalService;
     constructor(hospitalService: HospitalService);

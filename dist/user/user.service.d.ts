@@ -23,8 +23,8 @@
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
 import { Model } from 'mongoose';
-import { User, UserDocument } from './user.entity';
-import { CreateUserDto, UpdateUserDto } from './user.dto';
+import { User, UserDocument } from './entity/user.entity';
+import { CreateUserDto, UpdateUserDto } from './dto/user.dto';
 export declare class UserService {
     private userModel;
     constructor(userModel: Model<UserDocument>);
