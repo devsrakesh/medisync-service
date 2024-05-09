@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { PatientModule } from './patient/patient.module';
 import { ApointmentModule } from './apointment/apointment.module';
@@ -25,7 +24,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         uri: configService.get<string>('MONGODB_URL'),
       }),
     }),
-    AuthModule,
     UserModule,
     PatientModule,
     ApointmentModule,
