@@ -12,11 +12,20 @@ const rxjs_1 = require("rxjs");
 const operators_1 = require("rxjs/operators");
 let ResponseInterceptor = class ResponseInterceptor {
     intercept(context, next) {
-        return next.handle().pipe((0, operators_1.map)((data) => ({
-            status: context.switchToHttp().getResponse().statusCode,
-            message: 'Success',
-            data,
-        })), (0, operators_1.catchError)((error) => {
+        return next.handle().pipe((0, operators_1.map)((data) => {
+            const httpContext = context.switchToHttp();
+            const response = httpContext.getResponse();
+            let message = 'Operation successful';
+            if (data && typeof data === 'object' && 'message' in data) {
+                message = data.message;
+            }
+            const apiResponse = {
+                status: response.statusCode,
+                message,
+                data,
+            };
+            return apiResponse;
+        }), (0, operators_1.catchError)((error) => {
             const status = error instanceof common_1.HttpException ? error.getStatus() : common_1.HttpStatus.INTERNAL_SERVER_ERROR;
             return (0, rxjs_1.throwError)(() => error).pipe((0, operators_1.map)((err) => ({
                 status,

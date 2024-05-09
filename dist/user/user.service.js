@@ -22,20 +22,67 @@ let UserService = class UserService {
         this.userModel = userModel;
     }
     async findAll() {
-        return this.userModel.find().exec();
+        try {
+            return await this.userModel.find().exec();
+        }
+        catch (error) {
+            throw new common_1.InternalServerErrorException('An error occurred while retrieving users.');
+        }
     }
     async findOne(id) {
-        return this.userModel.findById(id).exec();
+        try {
+            const user = await this.userModel.findById(id).exec();
+            if (!user) {
+                throw new common_1.NotFoundException(`User with ID ${id} not found.`);
+            }
+            return user;
+        }
+        catch (error) {
+            if (error.name === 'CastError') {
+                throw new common_1.BadRequestException(`Invalid ID format: ${id}`);
+            }
+            throw new common_1.InternalServerErrorException('An error occurred while retrieving the user.');
+        }
     }
     async create(createUserDto) {
-        const createdUser = new this.userModel(createUserDto);
-        return createdUser.save();
+        try {
+            const createdUser = new this.userModel(createUserDto);
+            const response = await createdUser.save();
+            return response;
+        }
+        catch (error) {
+            throw new common_1.InternalServerErrorException('An error occurred while creating the user.');
+        }
     }
     async update(id, updateUserDto) {
-        return this.userModel.findByIdAndUpdate(id, updateUserDto, { new: true }).exec();
+        try {
+            const updatedUser = await this.userModel.findByIdAndUpdate(id, updateUserDto, { new: true }).exec();
+            if (!updatedUser) {
+                throw new common_1.NotFoundException(`User with ID ${id} not found.`);
+            }
+            return updatedUser;
+        }
+        catch (error) {
+            if (error.name === 'CastError') {
+                throw new common_1.BadRequestException(`Invalid ID format: ${id}`);
+            }
+            throw new common_1.InternalServerErrorException('An error occurred while updating the user.');
+        }
     }
     async remove(id) {
-        return this.userModel.findByIdAndDelete(id).exec();
+        try {
+            const deletedUser = await this.userModel.findByIdAndDelete(id).exec();
+            if (!deletedUser) {
+                throw new common_1.NotFoundException(`User with ID ${id} not found.`);
+            }
+            return deletedUser;
+        }
+        catch (error) {
+            if (error.name === 'CastError') {
+                throw new common_1.BadRequestException(`Invalid ID format: ${id}`);
+            }
+            throw new common_1.InternalServerErrorException('An error occurred while deleting the user.');
+        }
     }
 };
 exports.UserService = UserService;

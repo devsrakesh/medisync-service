@@ -21,6 +21,7 @@ const hospital_module_1 = require("./hospital/hospital.module");
 const role_module_1 = require("./role/role.module");
 const mongoose_1 = require("@nestjs/mongoose");
 const config_1 = require("@nestjs/config");
+const auth_module_1 = require("./auth/auth.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -47,6 +48,7 @@ exports.AppModule = AppModule = __decorate([
             human_resources_module_1.HumanResourcesModule,
             hospital_module_1.HospitalModule,
             role_module_1.RoleModule,
+            auth_module_1.AuthModule,
         ],
         controllers: [],
         providers: [],

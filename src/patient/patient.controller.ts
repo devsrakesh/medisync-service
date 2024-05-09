@@ -37,7 +37,7 @@ export class PatientController {
     if (!patient) {
       throw new NotFoundException(`Patient with ID ${id} not found`);
     }
-    return patient; // Assuming `findById` returns a proper response structure
+    return patient; 
   }
 
   @Post() // Endpoint to create a new patient

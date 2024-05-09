@@ -12,6 +12,7 @@ import { HospitalModule } from './hospital/hospital.module';
 import { RoleModule } from './role/role.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     HumanResourcesModule,
     HospitalModule,
     RoleModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],

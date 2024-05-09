@@ -7,11 +7,25 @@ import { Response } from 'src/interceptor/response.interface';
 export class ResponseInterceptor<T> implements NestInterceptor<T, Response<T>> {
   intercept(context: ExecutionContext, next: CallHandler): Observable<Response<T>> {
     return next.handle().pipe(
-      map((data) => ({
-        status: context.switchToHttp().getResponse().statusCode,
-        message: 'Success',
-        data,
-      })),
+      map((data) => {
+        const httpContext = context.switchToHttp();
+        const response = httpContext.getResponse();
+
+        // Check for a custom message from the controller
+        let message = 'Operation successful';
+        if (data && typeof data === 'object' && 'message' in data) {
+          message = data.message;
+        }
+
+        // Construct the response using the ApiResponse interface
+        const apiResponse: Response<T> = {
+          status: response.statusCode,
+          message,
+          data, // Controller's output
+        };
+
+        return apiResponse;
+      }),
       catchError((error) => {
         const status = error instanceof HttpException ? error.getStatus() : HttpStatus.INTERNAL_SERVER_ERROR;
         return throwError(() => error).pipe(

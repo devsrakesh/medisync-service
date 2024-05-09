@@ -21,24 +21,21 @@ let UserController = class UserController {
         this.userService = userService;
     }
     async findAll() {
-        const data = await this.userService.findAll();
-        console.log(data);
-        return {
-            message: "fix",
-            data
-        };
+        const response = await this.userService.findAll();
+        console.log(response);
+        return response;
     }
     async findOne(id) {
-        return this.userService.findOne(id);
+        return await this.userService.findOne(id);
     }
     async create(createUserDto) {
-        return this.userService.create(createUserDto);
+        return await this.userService.create(createUserDto);
     }
     async update(id, updateUserDto) {
-        return this.userService.update(id, updateUserDto);
+        return await this.userService.update(id, updateUserDto);
     }
     async remove(id) {
-        return this.userService.remove(id);
+        return await this.userService.remove(id);
     }
 };
 exports.UserController = UserController;
