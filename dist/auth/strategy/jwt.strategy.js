@@ -8,29 +8,39 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.JwtStrategy = void 0;
+exports.jwtStrategy = void 0;
+const common_1 = require("@nestjs/common");
+const config_1 = require("@nestjs/config");
 const passport_1 = require("@nestjs/passport");
 const passport_jwt_1 = require("passport-jwt");
-const common_1 = require("@nestjs/common");
-const auth_service_1 = require("../auth.service");
-let JwtStrategy = class JwtStrategy extends (0, passport_1.PassportStrategy)(passport_jwt_1.Strategy) {
-    constructor(authService) {
+const mongoose_1 = require("mongoose");
+const mongoose_2 = require("@nestjs/mongoose");
+const user_entity_1 = require("../../user/entity/user.entity");
+let jwtStrategy = class jwtStrategy extends (0, passport_1.PassportStrategy)(passport_jwt_1.Strategy, 'jwt') {
+    constructor(config, userModel) {
         super({
             jwtFromRequest: passport_jwt_1.ExtractJwt.fromAuthHeaderAsBearerToken(),
-            ignoreExpiration: false,
-            secretOrKey: 'secretKey',
+            secretOrKey: config.get('JWT_SECRET'),
         });
-        this.authService = authService;
+        this.userModel = userModel;
     }
     async validate(payload) {
-        const user = await this.authService.validateUser(payload.userId, payload.password);
+        const user = await this.userModel.findById({
+            _id: payload.sub,
+        });
+        delete user.password;
         return user;
     }
 };
-exports.JwtStrategy = JwtStrategy;
-exports.JwtStrategy = JwtStrategy = __decorate([
+exports.jwtStrategy = jwtStrategy;
+exports.jwtStrategy = jwtStrategy = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [auth_service_1.AuthService])
-], JwtStrategy);
-//# sourceMappingURL=jwt-strategy.js.map
+    __param(1, (0, mongoose_2.InjectModel)(user_entity_1.User.name)),
+    __metadata("design:paramtypes", [config_1.ConfigService,
+        mongoose_1.Model])
+], jwtStrategy);
+//# sourceMappingURL=jwt.strategy.js.map

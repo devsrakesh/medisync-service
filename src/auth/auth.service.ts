@@ -1,46 +1,81 @@
-import { Injectable, UnauthorizedException, NotFoundException } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
+import { CreateAuthDto } from './dto';
+import * as argon from 'argon2';
 import { JwtService } from '@nestjs/jwt';
-
-import * as bcrypt from 'bcrypt';
+import { ConfigService } from '@nestjs/config';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model, ObjectId } from 'mongoose';
+import { UpdateAuthDto } from './dto/update-auth.dto';
 import { User } from 'src/user/entity/user.entity';
-import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private jwtService: JwtService,
-    private usersService: UserService,
+    @InjectModel(User.name) private userModel: Model<User>,
+    private jwt: JwtService,
+    private config: ConfigService,
   ) {}
-
-  async validateUser(username: string, password: string): Promise<User | null> {
-    const user = await this.usersService.findOne(username);
+  async login(dto: UpdateAuthDto) {
+    const user = await this.userModel.findOne({
+      userId: dto.userId,
+    });
     if (!user) {
-      throw new NotFoundException('User not found');
+      throw new ForbiddenException('Unauthorized User');
+    }
+    const pwMatches = await argon.verify(user.password, dto.password);
+    if (!pwMatches) {
+      throw new ForbiddenException('Credential incorrect');
     }
 
-    const passwordMatch = password === user.password;
-    if (!passwordMatch) {
-      throw new UnauthorizedException('Invalid credentials');
-    }
-
-    return user;
-  }
-
-  async login(username: string, password: string) {
-    const user = await this.validateUser(username, password);
-
-    if (!user) {
-      throw new NotFoundException('User not found');
-    }
-
-    const payload = {
+    const accessToken = await this.signToken(user.id, user.userId);
+    let data = {
       userId: user.userId,
-      sub: user.hospital.toString(),
-      role: user.role,
+      _id: user._id,
+      accessToken,
     };
-
-    return {
-      access_token: this.jwtService.sign(payload),
+    console.log(data);
+    return { data, message: 'user logged successfully' };
+  }
+  async register(dto: CreateAuthDto) {
+    const password = dto.password;
+    const hash = await argon.hash(password);
+    console.log(dto);
+    // post method creates new user and enter data to  user db
+    try {
+      const oldUser = await this.userModel.findOne({
+        userId: dto.userId,
+      });
+      if (!oldUser) {
+        const user = await new this.userModel({
+          userId: dto.userId,
+          password: hash,
+        }).save();
+        const accessToken = await this.signToken(user.id, user.userId);
+        let data = {
+          ...user,
+          accessToken,
+        };
+        return { data, message: 'user signIn successfully' };
+      } else {
+        throw new ForbiddenException('Contact Number is already in use');
+      }
+    } catch (error) {
+      if (error.name === 'MongoError' && error.code === 11000) {
+        throw new ForbiddenException('Contact Number is already in use');
+      } else {
+        throw error;
+      }
+    }
+  }
+  async signToken(_id: ObjectId, userId: string): Promise<string> {
+    const payload = {
+      sub: _id,
+      userId,
     };
+    const token = await this.jwt.signAsync(payload, {
+      expiresIn: '15d',
+      secret: this.config.get('JWT_SECRET'),
+    });
+    return token;
   }
 }

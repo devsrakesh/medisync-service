@@ -16,10 +16,9 @@ async function bootstrap() {
         .setDescription('this is the api for HSM ')
         .setVersion('1.0')
         .addTag('HMS')
-        .setExternalDoc('Postman Collection', '/docs-json')
         .build();
     const document = swagger_1.SwaggerModule.createDocument(app, config);
-    swagger_1.SwaggerModule.setup('/docs', app, document);
+    swagger_1.SwaggerModule.setup('api', app, document);
     app.useGlobalInterceptors(new response_interceptor_1.ResponseInterceptor());
     await app.listen(3002);
 }
